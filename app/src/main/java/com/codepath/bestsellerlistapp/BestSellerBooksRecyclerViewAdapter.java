@@ -1,6 +1,6 @@
 package com.codepath.bestsellerlistapp;
 
-import android.net.Uri;
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
 import com.codepath.bestsellerlistapp.models.BestSellerBook;
-
 import java.util.List;
 
 /**
@@ -49,18 +45,17 @@ public class BestSellerBooksRecyclerViewAdapter extends RecyclerView.Adapter<Bes
         holder.buy_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //aad a link to go to the amazon url.
+
             }
         });
         holder.book_description.setText(books.get(position).description);
 
         try {
-            String ranking = String.format("%d", bestSellerBook.rank);
+            @SuppressLint("DefaultLocale") String ranking = String.format("%d", bestSellerBook.rank);
             holder.mBookRanking.setText(ranking);
             Glide.with(holder.mView).load(bestSellerBook.bookImageUrl).centerInside().into(holder.mbook_image);
         }catch (Exception e){
             e.printStackTrace();
-
         }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +98,7 @@ public class BestSellerBooksRecyclerViewAdapter extends RecyclerView.Adapter<Bes
             book_description = (TextView) view.findViewById(R.id.book_description);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return mBookTitle.toString() + " '" + mBookAuthor.getText() + "'";
